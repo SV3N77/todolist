@@ -6,7 +6,11 @@ function EnterTask({ onAddTask }) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    onAddTask(data.text);
+    const newToD0 = {
+      id: new Date().getTime(),
+      task: data.text,
+    };
+    onAddTask(newToD0);
     e.target.reset();
   }
 
@@ -36,18 +40,18 @@ function EnterTask({ onAddTask }) {
 function TaskList({ todolist, onDeleteTask }) {
   return (
     <div className="flex flex-col mt-5 gap-5">
-      {todolist.map((task) => (
+      {todolist.map((todo) => (
         <div
-          key={task}
+          key={todo.id}
           className="text-ms flex flex-row gap-40 mx-auto shadow-md bg-gray-200 rounded-md p-2"
         >
-          {task}
+          {todo.task}
           <div className="flex flex-row gap-5">
             <button className="rounded-md p-1 text-xs border-solid border-1 shadow-sm shadow-indigo-500 border-indigo-400 bg-indigo-200/40 hover:opacity-60">
               Edit
             </button>
             <button
-              onClick={() => onDeleteTask(task)}
+              onClick={() => onDeleteTask(todo.id)}
               className="rounded-md p-1 text-xs border-solid border-1 shadow-sm shadow-indigo-500 border-indigo-400 bg-indigo-200/40 hover:opacity-60"
             >
               Delete
@@ -60,14 +64,16 @@ function TaskList({ todolist, onDeleteTask }) {
 }
 
 function App() {
-  const [todolist, setTodolist] = useState(["task 1", "task 2", "task 3"]);
+  const [todolist, setTodolist] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentToDo, setCurrentToDo] = useState("");
 
-  function onAddTask(task) {
-    setTodolist([...todolist, task]);
+  function onAddTask(id) {
+    setTodolist([...todolist, id]);
   }
 
-  function onDeleteTask(task) {
-    setTodolist(todolist.filter((t) => t !== task));
+  function onDeleteTask(id) {
+    setTodolist(todolist.filter((t) => t.id !== id));
   }
 
   return (

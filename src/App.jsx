@@ -29,13 +29,13 @@ function EnterTask({ onAddTask }) {
 
   return (
     <div className="flex flex-row justify-center gap-6 -mt-6">
-      <Button onClick={openModal}>Add Task</Button>
+      <Button onClick={openModal}>Add Todo</Button>
       <Modal modalIsOpen={modalIsOpen} closeModal={closeModal}>
         <form
           className="flex flex-col gap-4 justify-center items-center"
           onSubmit={onSubmit}
         >
-          <Dialog.Title>Enter Task:</Dialog.Title>
+          <Dialog.Title>Enter Task</Dialog.Title>
           <input
             id="title"
             name="title"

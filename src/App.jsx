@@ -1,6 +1,6 @@
 import { useState } from "react";
-import EnterTask from "./EnterTask";
-import TaskList from "./TaskList";
+import EnterTask from "./components/EnterTask";
+import TaskList from "./components/TaskList";
 
 function App() {
   const [todolist, setTodolist] = useState([]);

@@ -2,22 +2,43 @@ import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import Modal from "./Modal";
 import Button from "./Button";
+import { useMutation, useQueryClient } from "react-query";
 
-function EnterTask({ onAddTask }) {
+async function postTodo({ title, text }) {
+  const todo = {
+    title,
+    task: text,
+  };
+  await fetch("http://localhost:3001/items", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(todo),
+  });
+}
+
+function EnterTask() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const createTodo = useMutation(postTodo, {
+    onSuccess: () => {
+      closeModal();
+      queryClient.invalidateQueries("todolist");
+    },
+    onError: () => {
+      alert("unable to create todo");
+    },
+  });
 
   function onSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    const newToD0 = {
-      id: new Date().getTime(),
-      title: data.title,
-      task: data.text,
-    };
-    onAddTask(newToD0);
-    e.target.reset();
-    closeModal();
+
+    createTodo.mutate(data);
   }
 
   function openModal() {
@@ -29,11 +50,11 @@ function EnterTask({ onAddTask }) {
   }
 
   return (
-    <div className="flex flex-row justify-center gap-6 -mt-6">
+    <div className="-mt-6 flex flex-row justify-center gap-6">
       <Button onClick={openModal}>Add Todo</Button>
       <Modal modalIsOpen={modalIsOpen} closeModal={closeModal}>
         <form
-          className="flex flex-col gap-4 justify-center items-center"
+          className="flex flex-col items-center justify-center gap-4"
           onSubmit={onSubmit}
         >
           <Dialog.Title>Enter Task</Dialog.Title>
@@ -42,15 +63,17 @@ function EnterTask({ onAddTask }) {
             name="title"
             type="text"
             placeholder="New Title"
-            className="px-2 w-full h-9 border-solid border-indigo-200 border-1 shadow-lg ease-linear duration-100 focus:outline-none focus:ring-1 focus:ring-indigo-200 focus:border-transparent rounded-md"
+            className="border-1 h-9 w-full rounded-md border-solid border-indigo-200 px-2 shadow-lg duration-100 ease-linear focus:border-transparent focus:outline-none focus:ring-1 focus:ring-indigo-200"
           />
           <textarea
             id="text"
             name="text"
             placeholder="Description"
-            className="resize-none p-2 w-full h-full border-solid border-1 shadow-lg ease-linear duration-100 focus:outline-none focus:ring-1 focus:ring-indigo-200 focus:border-transparent rounded-md"
+            className="border-1 h-full w-full resize-none rounded-md border-solid p-2 shadow-lg duration-100 ease-linear focus:border-transparent focus:outline-none focus:ring-1 focus:ring-indigo-200"
           />
-          <Button type="submit">Add Task</Button>
+          <Button type="submit" disabled={createTodo.isLoading}>
+            Add Task
+          </Button>
         </form>
       </Modal>
     </div>

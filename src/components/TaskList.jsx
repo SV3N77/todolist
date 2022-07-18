@@ -1,19 +1,31 @@
 import TodoItems from "./TodoItems";
+import { useQuery } from "react-query";
 
-function TaskList({ todolist, onDeleteTask, onEditTask }) {
+async function getTodolist() {
+  const data = await fetch("http://localhost:3001/items").then((res) =>
+    res.json()
+  );
+  return data;
+}
+
+function TaskList() {
+  const { data, status } = useQuery("todolist", getTodolist);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+  if (status === "error") {
+    return <div>Error unable to load todo list</div>;
+  }
+
   return (
-    <div className="flex flex-row flex-wrap mt-5 mx-4 gap-5">
-      {todolist.map((todo) => (
+    <div className="mx-4 mt-5 flex flex-row flex-wrap gap-5">
+      {data.map((todo) => (
         <div
           key={todo.id}
-          className="flex flex-row justify-center gap-2 p-4 pb-8 w-96 relative shadow-md bg-slate-200 rounded-md "
+          className="relative flex w-96 flex-row justify-center gap-2 rounded-md bg-slate-100 p-4 pb-8 shadow-md "
         >
-          <TodoItems
-            key={todo.id}
-            todo={todo}
-            onEditTask={onEditTask}
-            onDeleteTask={onDeleteTask}
-          />
+          <TodoItems key={todo.id} todo={todo} />
         </div>
       ))}
     </div>

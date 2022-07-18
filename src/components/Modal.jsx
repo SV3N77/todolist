@@ -32,7 +32,7 @@ function Modal({ children, modalIsOpen, closeModal }) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="py-4 px-12 w-full max-w-sm bg-slate-300 rounded-md">
+            <Dialog.Panel className="w-full max-w-sm rounded-md bg-slate-300 py-4 px-12">
               {children}
             </Dialog.Panel>
           </Transition.Child>

@@ -1,8 +1,9 @@
-function Button({ onClick, children }) {
+function Button({ onClick, children, ...props }) {
   return (
     <button
       onClick={onClick}
-      className=" rounded-sm p-1 text-xs border-solid border-1 shadow-sm shadow-indigo-500 border-indigo-400 bg-indigo-100 hover:bg-indigo-200"
+      className=" border-1 rounded-sm border-solid border-indigo-400 bg-indigo-100 p-1 text-xs shadow-sm shadow-indigo-500 hover:bg-indigo-200 disabled:pointer-events-none disabled:opacity-50"
+      {...props}
     >
       {children}
     </button>

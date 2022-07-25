@@ -18,7 +18,7 @@ async function editTodoItem({ id, title, text }) {
 }
 
 async function deleteTodoItem(id) {
-  await fetch(`/items/${id}`, {
+  await fetch(`http://localhost:3001/items/${id}`, {
     method: "DELETE",
   });
 }

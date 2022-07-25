@@ -6,7 +6,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 
-app.use(express.static(path.join(__dirname, "./dist")));
+// app.use(express.static(path.join(__dirname, "./dist")));
 
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.json());

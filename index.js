@@ -12,6 +12,10 @@ app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "./dist/index.html"));
+});
+
 app.get("/items", (req, res) => {
   fs.readFile("./api/items.json", "utf8", (err, data) => {
     if (err) {

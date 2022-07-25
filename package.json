@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "nodeindex.js",
-    "heroku-postbuild": "npm install && npm run build"
+    "start": "node index.js"
   },
   "engines": {
     "node": "16.14.2"

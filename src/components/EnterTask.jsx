@@ -9,7 +9,7 @@ async function postTodo({ title, text }) {
     title,
     task: text,
   };
-  await fetch("/items", {
+  await fetch("http://localhost:3001/items", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

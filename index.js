@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 app.get("/api/items", (req, res) => {
   fs.readFile("./api/items.json", "utf8", (err, data) => {
     if (err) {
-      console.log(err);
+      res.status(500).json(err);
     } else {
       res.send(data);
     }

@@ -63,7 +63,9 @@ app.put("/api/items/:id", (req, res) => {
     } else {
       const items = JSON.parse(data);
       const item = items.find((item) => item.id === req.params.id);
-
+      if (!item) {
+        return res.status(404).json({ message: "Item not found" });
+      }
       item.title = req.body.title;
       item.task = req.body.task;
       fs.writeFile(itemsPath, JSON.stringify(items), (err) => {

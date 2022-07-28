@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.static(path.join(__dirname, "./dist")));
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "https://todonotes-app.herokuapp.com/" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -64,7 +64,7 @@ app.put("/items/:id", (req, res) => {
     } else {
       const items = JSON.parse(data);
       const item = items.find((item) => item.id === req.params.id);
-      console.log(req.body);
+
       item.title = req.body.title;
       item.task = req.body.task;
       fs.writeFile("./api/items.json", JSON.stringify(items), (err) => {

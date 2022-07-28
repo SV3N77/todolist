@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.static(path.join(__dirname, "./dist")));
 
-app.use(cors({ origin: "https://todonotes-app.herokuapp.com/" }));
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

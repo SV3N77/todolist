@@ -5,6 +5,7 @@ const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
+const itemsPath = path.join(__dirname, "./api/items.json");
 
 app.use(express.static(path.join(__dirname, "./dist")));
 
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/items", (req, res) => {
-  fs.readFile(path.join(__dirname, "./api/items.json"), "utf8", (err, data) => {
+  fs.readFile(itemsPath, "utf8", (err, data) => {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -27,16 +28,16 @@ app.get("/api/items", (req, res) => {
 });
 
 app.post("/api/items", (req, res) => {
-  fs.readFile("./api/items.json", "utf8", (err, data) => {
+  fs.readFile(itemsPath, "utf8", (err, data) => {
     if (err) {
-      console.log(err);
+      res.status(500).json(err);
     } else {
       const items = JSON.parse(data);
       req.body.id = Math.random().toString(36).slice(2);
       items.push(req.body);
-      fs.writeFile("./api/items.json", JSON.stringify(items), (err) => {
+      fs.writeFile(itemsPath, JSON.stringify(items), (err) => {
         if (err) {
-          console.log(err);
+          res.status(500).json(err);
         } else {
           res.send(items);
         }
@@ -46,9 +47,9 @@ app.post("/api/items", (req, res) => {
 });
 
 app.get("/api/items/:id", (req, res) => {
-  fs.readFile("./api/items.json", "utf8", (err, data) => {
+  fs.readFile(itemsPath, "utf8", (err, data) => {
     if (err) {
-      console.log(err);
+      res.status(500).json(err);
     } else {
       const items = JSON.parse(data);
       const item = items.find((item) => item.id === req.params.id);
@@ -58,18 +59,18 @@ app.get("/api/items/:id", (req, res) => {
 });
 
 app.put("/api/items/:id", (req, res) => {
-  fs.readFile("./api/items.json", "utf8", (err, data) => {
+  fs.readFile(itemsPath, "utf8", (err, data) => {
     if (err) {
-      console.log(err);
+      res.status(500).json(err);
     } else {
       const items = JSON.parse(data);
       const item = items.find((item) => item.id === req.params.id);
 
       item.title = req.body.title;
       item.task = req.body.task;
-      fs.writeFile("./api/items.json", JSON.stringify(items), (err) => {
+      fs.writeFile(itemsPath, JSON.stringify(items), (err) => {
         if (err) {
-          console.log(err);
+          res.status(500).json(err);
         } else {
           res.send(items);
         }
@@ -79,16 +80,16 @@ app.put("/api/items/:id", (req, res) => {
 });
 
 app.delete("/api/items/:id", (req, res) => {
-  fs.readFile("./api/items.json", "utf8", (err, data) => {
+  fs.readFile(itemsPath, "utf8", (err, data) => {
     if (err) {
-      console.log(err);
+      res.status(500).json(err);
     } else {
       const items = JSON.parse(data);
       const item = items.find((item) => item.id === req.params.id);
       items.splice(items.indexOf(item), 1);
-      fs.writeFile("./api/items.json", JSON.stringify(items), (err) => {
+      fs.writeFile(itemsPath, JSON.stringify(items), (err) => {
         if (err) {
-          console.log(err);
+          res.status(500).json(err);
         } else {
           res.send(items);
         }

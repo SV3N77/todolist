@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const fs = require("fs");
-const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
@@ -9,7 +8,6 @@ const itemsPath = path.join(__dirname, "./api/items.json");
 
 app.use(express.static(path.join(__dirname, "./dist")));
 
-app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

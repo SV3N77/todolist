@@ -37,7 +37,7 @@ app.post("/api/items", (req, res) => {
         if (err) {
           res.status(500).json(err);
         } else {
-          res.send(items);
+          res.json(items);
         }
       });
     }
@@ -51,7 +51,7 @@ app.get("/api/items/:id", (req, res) => {
     } else {
       const items = JSON.parse(data);
       const item = items.find((item) => item.id === req.params.id);
-      res.send(item);
+      res.json(item);
     }
   });
 });
@@ -72,7 +72,7 @@ app.put("/api/items/:id", (req, res) => {
         if (err) {
           res.status(500).json(err);
         } else {
-          res.send(items);
+          res.json(items);
         }
       });
     }
@@ -91,7 +91,7 @@ app.delete("/api/items/:id", (req, res) => {
         if (err) {
           res.status(500).json(err);
         } else {
-          res.send(items);
+          res.json(items);
         }
       });
     }

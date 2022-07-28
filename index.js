@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
 
-app.get("/items", (req, res) => {
+app.get("/api/items", (req, res) => {
   fs.readFile("./api/items.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
@@ -26,7 +26,7 @@ app.get("/items", (req, res) => {
   });
 });
 
-app.post("/items", (req, res) => {
+app.post("/api/items", (req, res) => {
   fs.readFile("./api/items.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
@@ -45,7 +45,7 @@ app.post("/items", (req, res) => {
   });
 });
 
-app.get("/items/:id", (req, res) => {
+app.get("/api/items/:id", (req, res) => {
   fs.readFile("./api/items.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
@@ -57,7 +57,7 @@ app.get("/items/:id", (req, res) => {
   });
 });
 
-app.put("/items/:id", (req, res) => {
+app.put("/api/items/:id", (req, res) => {
   fs.readFile("./api/items.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
@@ -78,7 +78,7 @@ app.put("/items/:id", (req, res) => {
   });
 });
 
-app.delete("/items/:id", (req, res) => {
+app.delete("/api/items/:id", (req, res) => {
   fs.readFile("./api/items.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);

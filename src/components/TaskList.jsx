@@ -2,9 +2,7 @@ import TodoItems from "./TodoItems";
 import { useQuery } from "react-query";
 
 async function getTodolist() {
-  const data = await fetch("http://localhost:3001/items").then((res) =>
-    res.json()
-  );
+  const data = await fetch("/api/items").then((res) => res.json());
   return data;
 }
 

@@ -7,7 +7,9 @@ async function getTodolist() {
 }
 
 function TaskList() {
-  const { data, status } = useQuery("todolist", getTodolist);
+  const { data, status } = useQuery("todolist", getTodolist, {
+    refetchInterval: 5000,
+  });
 
   if (status === "loading") {
     return <div>Loading...</div>;

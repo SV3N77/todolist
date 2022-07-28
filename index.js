@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/items", (req, res) => {
-  fs.readFile("./api/items.json", "utf8", (err, data) => {
+  fs.readFile(path.join(__dirname, "./api/items.json"), "utf8", (err, data) => {
     if (err) {
       res.status(500).json(err);
     } else {

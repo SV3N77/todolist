@@ -20,7 +20,7 @@ app.get("/api/items", (req, res) => {
     if (err) {
       res.status(500).json(err);
     } else {
-      res.json(data);
+      res.json(JSON.parse(data));
     }
   });
 });

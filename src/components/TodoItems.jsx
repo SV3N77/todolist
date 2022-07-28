@@ -8,7 +8,7 @@ async function editTodoItem({ id, title, text }) {
     task: text,
   };
 
-  await fetch(`http://localhost:3001/items/${id}`, {
+  await fetch(`/items/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ async function editTodoItem({ id, title, text }) {
 }
 
 async function deleteTodoItem(id) {
-  await fetch(`http://localhost:3001/items/${id}`, {
+  await fetch(`/items/${id}`, {
     method: "DELETE",
   });
 }

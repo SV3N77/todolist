@@ -2,6 +2,9 @@ import { useState } from "react";
 import Button from "./Button";
 import { useMutation, useQueryClient } from "react-query";
 
+// Function to edit a todo item with the editTodoItem function in the backend API
+// and the query client
+// getting the id from the todo object
 async function editTodoItem({ id, title, text }) {
   const editedTodo = {
     title,
@@ -16,7 +19,7 @@ async function editTodoItem({ id, title, text }) {
     body: JSON.stringify(editedTodo),
   });
 }
-
+// delete the todo item from the server by id
 async function deleteTodoItem(id) {
   await fetch(`/api/items/${id}`, {
     method: "DELETE",
@@ -24,16 +27,20 @@ async function deleteTodoItem(id) {
 }
 
 function TodoItems({ todo }) {
+  // Saving state for isEditing
   const [isEditing, setIsEditing] = useState(false);
-
+  // Access the query client in app
   const queryClient = useQueryClient();
-
+  // Mutate the todo list with the deleteTodoItem function
+  // invalidate the query client to refresh the list
   const deleteTodo = useMutation(deleteTodoItem, {
     onSuccess: () => {
       queryClient.invalidateQueries("todolist");
     },
   });
-
+  // Mutate the todo list with the editTodoItem function
+  // invalidate the query client to refresh the list
+  // with error handling if the put fails
   const editTodo = useMutation(editTodoItem, {
     onSuccess: () => {
       setIsEditing(false);
@@ -43,7 +50,7 @@ function TodoItems({ todo }) {
       alert("unable to edit todo");
     },
   });
-
+  // function to pass id into the deletetodo function
   function onDeleteTask(id) {
     deleteTodo.mutate(id);
   }
@@ -52,9 +59,10 @@ function TodoItems({ todo }) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+    // call the mutation function with the form data and the id
     editTodo.mutate({ id: todo.id, ...data });
   }
-
+  // Ternary to determine if the form is editing or not and render the form or the todo item
   return isEditing ? (
     <form
       className="flex h-80 grow flex-col items-center gap-5"

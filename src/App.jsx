@@ -8,8 +8,8 @@ function App() {
         To Do List
       </header>
       <main>
-        <EnterTask />
-        <TaskList />
+        <EnterTask /> {/* Add a new task */}
+        <TaskList /> {/* List of tasks */}
       </main>
     </div>
   );
